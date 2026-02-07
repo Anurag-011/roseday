@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Rose Day ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===== GLOBAL FIXES ===== */
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    overscroll-behavior: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* ===== BACKGROUND ===== */
+:root {
+    --rose-bg:
+        radial-gradient(circle at top, #ffd1dc, transparent 60%),
+        linear-gradient(135deg, #ff4d6d, #c9184a);
+}
+
+body {
+    font-family: 'Playfair Display', serif;
+    background: var(--rose-bg);
+}
+
+/* ===== SCREEN SYSTEM ===== */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease;
+
+    padding: 24px;
+    background: var(--rose-bg);
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+}
+
+/* ===== TEXT ===== */
+.tap,
+.typewriter,
+.caption,
+.final-text {
+    color: #ffffff;
+    text-shadow:
+        0 2px 6px rgba(0,0,0,0.5),
+        0 0 12px rgba(255,105,180,0.6);
+}
+
+.tap {
+    font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.typewriter {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    max-width: 90%;
+}
+
+/* ===== PHOTOS ===== */
+.photo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.photo-wrapper img {
+    max-width: 88vw;
+    max-height: 68vh;
+    object-fit: contain;
+
+    border-radius: 22px;
+    padding: 6px;
+
+    background: linear-gradient(135deg, #ffccd5, #ff4d6d, #ffccd5);
+
+    box-shadow:
+        0 0 20px rgba(255,77,109,0.7),
+        0 0 45px rgba(255,105,180,0.9),
+        inset 0 0 15px rgba(255,255,255,0.6);
+
+    animation: glow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow:
+            0 0 18px rgba(255,77,109,0.6),
+            0 0 35px rgba(255,105,180,0.8);
+    }
+    to {
+        box-shadow:
+            0 0 28px rgba(255,77,109,0.9),
+            0 0 55px rgba(255,105,180,1);
+    }
+}
+
+.caption {
+    font-size: clamp(1.15rem, 4.5vw, 1.55rem);
+    max-width: 90%;
+}
+
+/* ===== FINAL ===== */
+.final {
+    flex-direction: column;
+    gap: 26px;
+}
+
+.final-text {
+    font-size: clamp(2.4rem, 6vw, 3.2rem);
+}
+
+button {
+    padding: 14px 36px;
+    border: none;
+    border-radius: 40px;
+    background: linear-gradient(135deg, #ffffff, #ffe4ec);
+    color: #c9184a;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* ===== FALLING ROSES / HEARTS ===== */
+.fall {
+    position: absolute;
+    top: -40px;
+    font-size: 26px;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+    }
+}
+
+/* ===== SECRET ===== */
+.secret {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+    font-size: 1.6rem;
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.secret.active {
+    display: flex;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 0 -->
+<div class="screen active tap">
+    Tap anywhere to begin ❤️
+</div>
+
+<!-- 1 -->
+<div class="screen typewriter" id="type"></div>
+
+<!-- 2 -->
+<div class="screen">
+    <div class="photo-wrapper">
+        <img src="photo1.jpg">
+        <div class="caption">Every time I look at you, the world fades away.</div>
+    </div>
+</div>
+
+<!-- 3 -->
+<div class="screen">
+    <div class="photo-wrapper">
+        <img src="photo2.jpg">
+        <div class="caption">In your arms, I find my home.</div>
+    </div>
+</div>
+
+<!-- 4 -->
+<div class="screen">
+    <div class="photo-wrapper">
+        <img src="photo3.jpg">
+        <div class="caption">No matter the distance, we still hold each other.</div>
+    </div>
+</div>
+
+<!-- 5 -->
+<div class="screen">
+    <div class="photo-wrapper">
+        <img src="final.jpeg">
+        <div class="caption">Happy Rose Day 🌹</div>
+    </div>
+</div>
+
+<!-- 6 -->
+<div class="screen final">
+    <div class="final-text">Forever yours.</div>
+    <button onclick="replay()">Replay ❤️</button>
+</div>
+
+<div class="secret" id="secret">
+    You found this…<br>I love you more than words 💕
+</div>
+
+<script>
+const screens = document.querySelectorAll(".screen");
+
+const sequence = [
+    { i: 1, t: 1200 },
+    { i: 2, t: 3200 },
+    { i: 3, t: 3200 },
+    { i: 4, t: 3200 },
+    { i: 5, t: 2500 },
+    { i: 6, t: 0 }
+];
+
+let started = false;
+let step = 0;
+let symbol = "🌹";
+
+/* TAP TO START */
+document.body.addEventListener("click", () => {
+    if (!started) {
+        started = true;
+        screens[0].classList.remove("active");
+        startTypewriter();
+    }
+});
+
+/* TYPEWRITER */
+function startTypewriter() {
+    const text = "Every day without you feels incomplete…";
+    const el = document.getElementById("type");
+    el.classList.add("active");
+    let i = 0;
+
+    const typing = setInterval(() => {
+        el.textContent += text[i++];
+        if (i === text.length) {
+            clearInterval(typing);
+            setTimeout(runSequence, 400);
+        }
+    }, 35);
+}
+
+/* SEQUENCE */
+function runSequence() {
+    function next() {
+        screens.forEach(s => s.classList.remove("active"));
+        const current = sequence[step];
+        screens[current.i].classList.add("active");
+        if (current.i >= 5) symbol = "❤️";
+        step++;
+        if (current.t > 0) setTimeout(next, current.t);
+    }
+    next();
+}
+
+/* REPLAY */
+function replay() {
+    location.reload();
+}
+
+/* FALLING */
+function createFall() {
+    const el = document.createElement("div");
+    el.className = "fall";
+    el.textContent = symbol;
+    el.style.left = Math.random() * window.innerWidth + "px";
+    el.style.animationDuration = (3 + Math.random() * 3) + "s";
+    el.onclick = () => document.getElementById("secret").classList.add("active");
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 6000);
+}
+setInterval(createFall, 350);
+
+document.getElementById("secret").onclick = () =>
+    document.getElementById("secret").classList.remove("active");
+</script>
+
+</body>
+</html>
